@@ -19,6 +19,10 @@ public class Hammurabi {
         int land = 1000;
         int landValue = 19;
         int year = 1;
+        int grainFed;
+        int plant;
+        int starved = 0;
+        int immigrant = 5;
 
         while(year<=10){
 // O great Hammurabi!
@@ -33,8 +37,8 @@ public class Hammurabi {
 
             System.out.println("O great Michael!");
             System.out.println("You are in year " + year + " of your ten year rule.");
-            // System.out.println("In the previous year 0 people starved to death.");
-            // System.out.println("In the previous year 5 people entered the kingdom.");
+            System.out.println("In the previous year " + starved + " people starved to death.");
+            System.out.println("In the previous year " + immigrant + " people entered the kingdom.");
             System.out.println("The population is now " + population);
             // System.out.println("We harvested 3000 bushels at 3 bushels per acre.");
             System.out.println("Rats destroyed 200 bushels, leaving " + grain + " bushels in storage.");
@@ -43,18 +47,25 @@ public class Hammurabi {
 
             int buy = askHowManyAcresToBuy(landValue, grain);
             if(buy > 0){
-                grain = grain - (buy * landValue);
+                grain -= (buy * landValue);
                 land += buy;
             } else {
                 int sell = askHowManyAcresToSell(land);
                 land -= sell;
-                grain = grain + (sell * landValue);
+                grain += (sell * landValue);
             }
-            int feed = askHowMuchGrainToFeedPeople(grain);
-            grain = grain - feed;
+            grainFed = askHowMuchGrainToFeedPeople(grain);
+            grain -= grainFed;
 
-            int plant = askHowManyAcresToPlant(land, population, grain);
-            grain = grain - (plant * 2);
+            plant = askHowManyAcresToPlant(land, population, grain);
+            grain -= (plant * 2);
+
+            starved = starvationDeaths(population, grainFed);
+            population -= starved;
+
+            if(uprising(population, starved)) {
+                break;
+            }
 
             year++;
         }
@@ -143,6 +154,22 @@ public class Hammurabi {
         }
     }
 
+    public int starvationDeaths(int population, int grainFed) {
+        int populationFed = grainFed / 20;
+        if(populationFed >= population){
+            return 0;
+        } else  {
+            return  population - populationFed;
+        }
+    }
+
+    public boolean uprising(int population, int starved) {
+        if(starved * 100 > population * 45) {
+            return true;
+        }
+        return false;
+    }
+
     public int getNumber(String message) {
         while (true) {
             System.out.print(message);
@@ -154,5 +181,7 @@ public class Hammurabi {
             }
         }
     }
+
+    
 
 }
