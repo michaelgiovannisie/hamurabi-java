@@ -62,11 +62,15 @@ public class Hammurabi {
                 population -= pDeath;
 
                 if(uprising(population, starved)) {
-                    printBadResult();
+                    printImpeachment();
                     break;
                 }
 
-                newImmigrant = immigrants(population, land, grain, starved);
+                if (starved > 0) {
+                    newImmigrant = 0;
+                    } else {
+                        newImmigrant = immigrants(population, land, grain);
+                    }
                 population += newImmigrant;
 
                 yieldPerAcre = harvest(land);
@@ -82,7 +86,7 @@ public class Hammurabi {
                 year++;
             }
             if (population == 0) {
-            printBadResult();
+            printExtinction();
             } else {
             finalSummary();
             }
@@ -104,7 +108,14 @@ public class Hammurabi {
 
     }
 
-    public void printBadResult() {
+    public void printExtinction(){
+        System.out.println("THE KINGDOM HAS ACHIEVED PERFECT EFFICIENCY.\n" +
+                   "THERE ARE NOW ZERO PEOPLE TO FEED.\n\n" +
+                   "UNFORTUNATELY, THERE ARE ALSO ZERO PEOPLE LEFT.\n" +
+                   "THERE IS NO ONE LEFT TO JUDGE YOU.\n");
+    }
+
+    public void printImpeachment() {
         System.out.println(starved + " PEOPLE DIED FROM STARVATION\n" +
                                     "IT WAS A DISASTAAAH.\n" +
                                     "YOUR RULE HAS BEEN SO DISASTROUS THAT THE PEOPLE HAVE\n" +
@@ -116,24 +127,28 @@ public class Hammurabi {
     public void finalSummary() {
         int yearsPlayed = year - 1;
         double percentDied = (totalStarvDeaths / (yearsPlayed * 100)) * 100;
-        System.out.println("IN YOUR 10-YEAR TERM OF OFFICE, " + percentDied + " PERCENT OF THE\n" +
+        System.out.println("DURING YOUR REIGN, " + percentDied + " PERCENT OF THE\n" +
 			               "POPULATION STARVED PER YEAR ON AVERAGE, I.E., A TOTAL OF\n" + 
                             totalStarvDeaths + " PEOPLE DIED!!\n" +
 			               "YOU STARTED WITH 10 ACRES PER PERSON AND ENDED WITH\n" +
 			                (land / population) + " ACRES PER PERSON\n\n");
 		if (percentDied > 33 || land / population < 7) {
-			    printBadResult();
-            }   else if (percentDied > 10 || land / population < 9) {
+			    System.out.println("YOUR RULE HAS FINALLY COME TO AN END.\n" +
+                                   "THE PEOPLE ARE RELIEVED.\n\n" +
+                                   "NOT BECAUSE THINGS IMPROVED,\n" +
+                                   "BUT BECAUSE YOU CAN NO LONGER MAKE DECISIONS\n." +
+                                   "THE PEOPLE REMAIN, BUT THEIR FAITH IN YOU DOES NOT.\n");
+            } else if (percentDied > 10 || land / population < 9) {
 			        System.out.println("YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
 					                   "THE PEOPLE (REMAINING) FIND YOU AN UNPLEASANT RULER, AND,\n" +
 					                   "FRANKLY, HATE YOUR GUTS!");
-                } else if (percentDied > 3 || land / population < 10) {
+            } else if (percentDied > 3 || land / population < 10) {
 			        System.out.println("YOUR PERFORMANCE COULD HAVE BEEN SOMEWHAT BETTER, BUT\n" +
 					                    "REALLY WASN'T TOO BAD AT ALL.\n" +
 					                    Math.random() * population * .8 + " PEOPLE WOULD" +
 					                    "DEARLY LIKE TO SEE YOU ASSASSINATED BUT WE ALL HAVE OUR" +
 					                    "TRIVIAL PROBLEMS");
-                } else {
+            } else {
 			        System.out.println("A FANTASTIC PERFORMANCE!!!  CHARLEMANGE, DISRAELI, AND\n" +
 					                   "JEFFERSON COMBINED COULD NOT HAVE DONE BETTER!");
 		            System.out.println("\n\n\n\n\n\n\n\n\n\nSo long for now.");
@@ -157,7 +172,10 @@ public class Hammurabi {
         int acres;
         int totalCost;
         while(true){
-            acres = getNumber("O great " + playerName + "! How many acres of land do you want to buy?\n");
+            acres = getNumber("O great " + playerName + "!\n" +
+                              "Your land, grain, and people place limits on your ambition.\n" +
+                              "We may plant up to " + (grain/2) + " acres with our resources.\n" +
+                              "How many acres of land do you want to buy?\n");
             if(acres < 0) {
                 System.out.println("Please enter positive number");
                 continue;
@@ -224,7 +242,7 @@ public class Hammurabi {
             }
 
             if(plant > grain/2) {
-                System.out.println("O great " + playerName + "! Surely You jest! We can only plant up to " + (grain/2) + " acres with your grain");
+                System.out.println("O great " + playerName + "! Surely You jest! We can only plant up to " + (grain/2) + " acres with our grain");
                 continue;
             }
 
@@ -260,10 +278,8 @@ public class Hammurabi {
         return false;
     }
 
-    public int immigrants(int population, int land, int grain, int starved) {
+    public int immigrants(int population, int land, int grain) {
         if(population == 0){
-            return 0;
-        } else if(starved > 0){
             return 0;
         } else {
         return (20 * land + grain) / (100 * population) + 1;
@@ -300,7 +316,7 @@ public class Hammurabi {
 
     public String getName(){
         while(true) {
-            System.out.println("O GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
+            System.out.println("\n\nO GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
                               "WHAT SHALL WE CALL YOU BEFORE HISTORY JUDGES YOU HARSHLY?");
             String name = scanner.nextLine();
             if (name.isEmpty()) {
