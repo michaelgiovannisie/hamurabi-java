@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="hammurabi.HammurabiTest" time="0.182" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="hammurabi.HammurabiTest" time="0.047" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/michael/Projects/hamurabi-java/target/surefire/surefirebooter-20260418222313937_3.jar /Users/michael/Projects/hamurabi-java/target/surefire 2026-04-18T22-23-13_882-jvmRun1 surefire-20260418222313937_1tmp surefire_0-20260418222313937_2tmp"/>
+    <property name="sun.java.command" value="/Users/michael/Projects/hamurabi-java/target/surefire/surefirebooter-20260419163151588_3.jar /Users/michael/Projects/hamurabi-java/target/surefire 2026-04-19T16-31-51_535-jvmRun1 surefire-20260419163151588_1tmp surefire_0-20260419163151588_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="test" value="hammurabi.HammurabiTest"/>
@@ -29,7 +29,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/Users/michael/Projects/hamurabi-java/target/surefire/surefirebooter-20260418222313937_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/michael/Projects/hamurabi-java/target/surefire/surefirebooter-20260419163151588_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="17.0.18+8"/>
@@ -58,13 +58,13 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testUprising" classname="hammurabi.HammurabiTest" time="0.127"/>
-  <testcase name="testNewCostOfLand" classname="hammurabi.HammurabiTest" time="0.0"/>
+  <testcase name="testUprising" classname="hammurabi.HammurabiTest" time="0.01"/>
+  <testcase name="testNewCostOfLand" classname="hammurabi.HammurabiTest" time="0.003"/>
   <testcase name="testImmigrants" classname="hammurabi.HammurabiTest" time="0.0"/>
-  <testcase name="testHarvest" classname="hammurabi.HammurabiTest" time="0.001"/>
-  <testcase name="testPlagueDeaths1" classname="hammurabi.HammurabiTest" time="0.001"/>
-  <testcase name="testPlagueDeaths2" classname="hammurabi.HammurabiTest" time="0.001"/>
+  <testcase name="testHarvest" classname="hammurabi.HammurabiTest" time="0.0"/>
+  <testcase name="testPlagueDeaths1" classname="hammurabi.HammurabiTest" time="0.002"/>
+  <testcase name="testPlagueDeaths2" classname="hammurabi.HammurabiTest" time="0.0"/>
   <testcase name="testStarvationDeaths" classname="hammurabi.HammurabiTest" time="0.0"/>
   <testcase name="testGrainEatenByRats1" classname="hammurabi.HammurabiTest" time="0.0"/>
-  <testcase name="testGrainEatenByRats2" classname="hammurabi.HammurabiTest" time="0.002"/>
+  <testcase name="testGrainEatenByRats2" classname="hammurabi.HammurabiTest" time="0.001"/>
 </testsuite>

@@ -29,9 +29,7 @@ public class Hammurabi {
     }
     
     public void playGame(){
-        playerName = getName();
-
-        printWelcome();
+        playerName = getName().toUpperCase();
 
         do {
             resetGame();
@@ -43,10 +41,15 @@ public class Hammurabi {
                 if(buy > 0){
                     grain -= (buy * landValue);
                     land += buy;
+                    buyResult(land);
                 } else {
-                    int sell = askHowManyAcresToSell(land);
+                int sell = askHowManyAcresToSell(land);
+
+                if (sell > 0) {
                     land -= sell;
                     grain += (sell * landValue);
+                    sellResult(landValue, sell);
+                    }
                 }
                 grainFed = askHowMuchGrainToFeedPeople(grain);
                 grain -= grainFed;
@@ -54,12 +57,22 @@ public class Hammurabi {
                 plant = askHowManyAcresToPlant(land, population, grain);
                 grain -= (plant * 2);
 
+                // if (population > 0 && askForWar()) {
+                //     resolveWar();
+                //     if (population == 0) {
+                //         break;
+                //     }
+                // }
+
                 starved = starvationDeaths(population, grainFed);
                 totalStarvDeaths += starved;
                 population -= starved;
 
                 pDeath = plagueDeaths(population);
-                population -= pDeath;
+                if (pDeath > 0) {
+                    population -= pDeath;
+                    announcePlague();
+                }
 
                 if(uprising(population, starved)) {
                     printImpeachment();
@@ -96,7 +109,7 @@ public class Hammurabi {
 
     public void printSummary() {
 
-            System.out.println("\nO great " + playerName + "!");
+            System.out.println("\nWE BEG TO REPORT, O great " + playerName + "!");
             System.out.println("You are in year " + year + " of your ten year rule.");
             System.out.println("In the previous year " + starved + " people starved to death.");
             System.out.println("In the previous year " + newImmigrant + " people entered the kingdom.");
@@ -127,25 +140,25 @@ public class Hammurabi {
     public void finalSummary() {
         int yearsPlayed = year - 1;
         double percentDied = (totalStarvDeaths / (yearsPlayed * 100)) * 100;
-        System.out.println("DURING YOUR REIGN, " + percentDied + " PERCENT OF THE\n" +
-			               "POPULATION STARVED PER YEAR ON AVERAGE, I.E., A TOTAL OF\n" + 
-                            totalStarvDeaths + " PEOPLE DIED!!\n" +
-			               "YOU STARTED WITH 10 ACRES PER PERSON AND ENDED WITH\n" +
-			                (land / population) + " ACRES PER PERSON\n\n");
+        System.out.println("During your reign, " + String.format("%.2f", percentDied) + "% of your people starved each year on average,\n" +
+                   "resulting in " + totalStarvDeaths + " total deaths.\n" +
+                   "You started with 10 acres per person and now end with " +
+                   (land / population) + " acres per person.\n" +
+                   "The kingdom has... changed.\n");
 		if (percentDied > 33 || land / population < 7) {
-			    System.out.println("YOUR RULE HAS FINALLY COME TO AN END.\n" +
-                                   "THE PEOPLE ARE RELIEVED.\n\n" +
-                                   "NOT BECAUSE THINGS IMPROVED,\n" +
-                                   "BUT BECAUSE YOU CAN NO LONGER MAKE DECISIONS\n." +
-                                   "THE PEOPLE REMAIN, BUT THEIR FAITH IN YOU DOES NOT.\n");
+			    System.out.println("YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
+					                "THE PEOPLE (REMAINING) FIND YOU AN UNPLEASANT RULER, AND,\n" +
+					                "FRANKLY, HATE YOUR GUTS!");
             } else if (percentDied > 10 || land / population < 9) {
-			        System.out.println("YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
-					                   "THE PEOPLE (REMAINING) FIND YOU AN UNPLEASANT RULER, AND,\n" +
-					                   "FRANKLY, HATE YOUR GUTS!");
+			        System.out.println("YOUR RULE HAS FINALLY COME TO AN END.\n" +
+                                       "THE PEOPLE ARE RELIEVED.\n\n" +
+                                       "NOT BECAUSE THINGS IMPROVED,\n" +
+                                       "BUT BECAUSE YOU CAN NO LONGER MAKE DECISIONS.\n" +
+                                       "THE PEOPLE REMAIN, BUT THEIR FAITH IN YOU DOES NOT.\n");
             } else if (percentDied > 3 || land / population < 10) {
-			        System.out.println("YOUR PERFORMANCE COULD HAVE BEEN SOMEWHAT BETTER, BUT\n" +
-					                    "REALLY WASN'T TOO BAD AT ALL.\n" +
-					                    Math.random() * population * .8 + " PEOPLE WOULD" +
+			        System.out.println("YOUR PERFORMANCE COULD HAVE BEEN SOMEWHAT BETTER,\n" +
+					                    "BUT REALLY WASN'T TOO BAD AT ALL.\n" +
+					                    (int)(Math.random() * population * 0.8) + " PEOPLE WOULD" +
 					                    "DEARLY LIKE TO SEE YOU ASSASSINATED BUT WE ALL HAVE OUR" +
 					                    "TRIVIAL PROBLEMS");
             } else {
@@ -154,6 +167,7 @@ public class Hammurabi {
 		            System.out.println("\n\n\n\n\n\n\n\n\n\nSo long for now.");
                 }
     }
+    
 
     public void printWelcome() {
         System.out.println("\n\nWELCOME, O GREAT " + playerName + "!\n" +
@@ -165,19 +179,19 @@ public class Hammurabi {
                             "Each person can farm at most 10 acres of land\n" +
                             "It takes 2 bushels of grain to farm an acre of land\n" +
                             "The market price for land fluctuates yearly\n" +
-                            "Beware plague and disaster!\n\n");
+                            "Nobody will come to the city if people are starving\n" +
+                            "Beware plague and disaster!\n" +
+                            "People will revolt if more than 45% of the people starve.\n" +
+                            "(This will cause you to be immediately thrown out of office, ending the game.)");
     }
 
     public int askHowManyAcresToBuy(int landValue, int grain) {
         int acres;
         int totalCost;
         while(true){
-            acres = getNumber("O great " + playerName + "!\n" +
-                              "Your land, grain, and people place limits on your ambition.\n" +
-                              "We may plant up to " + (grain/2) + " acres with our resources.\n" +
-                              "How many acres of land do you want to buy?\n");
+            acres = getNumber("How many acres of land do you want to buy?\n");
             if(acres < 0) {
-                System.out.println("Please enter positive number");
+                System.out.println("That is not a positive number. Try again, but this time... positively.");
                 continue;
             } 
 
@@ -191,12 +205,16 @@ public class Hammurabi {
         }
     }
 
+    public void buyResult(int land) {
+        System.out.println("Congratulations. You now own " + land + " acres. Even more dirt!");
+    }
+
     public int askHowManyAcresToSell(int land) {
         int acres;
         while(true){
-            acres = getNumber("O great " + playerName + "! How many acres of land do you want to sell?\n");
+            acres = getNumber("How many acres of land do you want to sell?\n");
             if(acres < 0) {
-                System.out.println("Please enter positive number");
+                System.out.println("That is not a positive number. Try again, but this time... positively.");
                 continue;
             } 
 
@@ -208,14 +226,18 @@ public class Hammurabi {
         }
     }
 
+    public void sellResult(int landValue, int sell) {
+        System.out.println("You've sold " + sell + " acres for " + (landValue * sell)+  " bushels of grain.\n" +
+                           "The map just got smaller, but at least you can eat");
+    }
 
     public int askHowMuchGrainToFeedPeople(int grain) {
         int bushels;
         while(true){
-            bushels = getNumber("O great " + playerName + "! How much grain do you want to spend to feed people?\n"
-            );
+            bushels = getNumber("How much grain do you want to spend to feed people?\n" +
+                                "To keep everyone alive, we require " + (population * 20) + " bushels.\n");
             if(bushels < 0) {
-                System.out.println("Please enter positive number");
+                System.out.println("That is not a positive number. Try again, but this time... positively.");
                 continue;
             } 
 
@@ -229,10 +251,14 @@ public class Hammurabi {
 
     public int askHowManyAcresToPlant(int land, int population, int grain) {
         int plant;
+        int maxPlant = Math.min(land, Math.min(grain / 2, population * 10));
         while(true){
-            plant = getNumber("O great " + playerName + "! How many acres of land do you want to plant with grain?\n");
+            plant = getNumber("O great " + playerName + "!\n" + 
+                              "Your land, grain, and people place limits on your ambition.\n" +
+                              "We may plant up to " + maxPlant + " acres with our resources.\n" +  
+                              "How many acres of land do you want to plant with grain?\n");
             if(plant < 0) {
-                System.out.println("Please enter positive number");
+                System.out.println("That is not a positive number. Try again, but this time... positively.");
                 continue;
             } 
 
@@ -260,6 +286,11 @@ public class Hammurabi {
             return population / 2;
         }
         return 0;
+    }
+
+    public void announcePlague() {
+         System.out.println("A plague has swept the kingdom.\n" +
+                               "Half your people are gone. The remaining half are concerned.");
     }
 
     public int starvationDeaths(int population, int grainFed) {
@@ -309,7 +340,7 @@ public class Hammurabi {
                 return scanner.nextInt();
             }
             catch (InputMismatchException e) {
-                System.out.println("\"" + scanner.next() + "\" isn't a number!");
+                System.out.println("That's not a whole number. The scribes refuse to calculate that.");
             }
         }
     } 
@@ -329,7 +360,7 @@ public class Hammurabi {
     
     public boolean playAgain() {
         while (true) {
-            System.out.print("DO YOU WISH TO RULE AGAIN? (Y/N): ");
+            System.out.print("Do you wish to rule again? (Y/N): ");
 
             String input = scanner.next().trim().toLowerCase();
 
@@ -338,7 +369,7 @@ public class Hammurabi {
             } else if (input.equals("n") || input.equals("no")) {
                 return false;
             } else {
-                System.out.println("PLEASE ANSWER WITH YES OR NO.\n");
+                System.out.println("Please answer with yes or no.\n");
             }
         }
     }
@@ -357,5 +388,96 @@ public class Hammurabi {
         yieldPerAcre = 0;
         totalStarvDeaths = 0;
     }
+
+    // public boolean askForWar() {
+    //     while (true) {
+    //         System.out.println("Shall we march to war this year?\n" +
+    //                         "or keep our people alive just a little longer? (Y/N)");
+
+    //         String input = scanner.next().trim().toLowerCase();
+
+    //         if (input.equals("y") || input.equals("yes")) {
+    //             System.out.println("An ambitious choice. The generals are pleased. The farmers, less so.");
+    //             return true;
+    //         }
+
+    //         if (input.equals("n") || input.equals("no")) {
+    //             System.out.println("Caution wins the day. No one dies… today.");
+    //             return false;
+    //         }
+
+    //         System.out.println("That was neither yes nor no. The generals are confused.\n");
+    //         }
+    // }
+
+    // public void resolveWar() {
+    //     int rawStrength = population + (grain / 50);
+    //     int strength = Math.min(180, rawStrength);
+
+    //     int roll = rand.nextInt(200);
+
+    //     if (roll < strength * 0.5) {
+    //         printWarWin();
+
+    //         int grainGain = Math.max(50, grain * 20 / 100);
+    //         int landGain = Math.max(10, land * 15 / 100);
+
+    //         grain += grainGain;
+    //         land += landGain;
+
+    //         System.out.println("You gained " + grainGain + " grain and " + landGain + " land.");
+
+    //     } else if (roll < strength) {
+    //         printWarDraw();
+
+    //         int popLoss = Math.max(5, population * 10 / 100);
+    //         int grainLoss = Math.max(50, grain * 10 / 100);
+
+    //         // 🔒 prevent over-subtraction
+    //         popLoss = Math.min(population, popLoss);
+    //         grainLoss = Math.min(grain, grainLoss);
+
+    //         population -= popLoss;
+    //         grain -= grainLoss;
+
+    //         System.out.println(popLoss + " people were lost and " + grainLoss + " grain was wasted.");
+
+    //     } else {
+    //         printWarLose();
+
+    //         int popLoss = Math.max(10, population * 20 / 100);
+    //         int grainLoss = Math.max(50, grain * 25 / 100);
+    //         int landLoss = Math.max(10, land * 15 / 100);
+
+    //         popLoss = Math.min(population, popLoss);
+    //         grainLoss = Math.min(grain, grainLoss);
+    //         landLoss = Math.min(land, landLoss);
+
+    //         population -= popLoss;
+    //         grain -= grainLoss;
+    //         land -= landLoss;
+
+    //         System.out.println("You lost " + popLoss + " people, " + grainLoss + " grain, and " + landLoss + " land.");
+    //     }
+
+    //     population = Math.max(0, population);
+    //     grain = Math.max(0, grain);
+    //     land = Math.max(0, land);
+    // }
+
+    // public void printWarWin() {
+    //     System.out.println("Victory! Veni, vidi, vici. History agrees. Reality is still processing.\n" +
+    //                        "The kingdom expands, and the people celebrate.");
+    // }
+
+    // public void printWarDraw() {
+    //     System.out.println("The battle was fierce, but neither side prevailed.\n" +
+    //                        "The land remains unchanged. Your population does not.");
+    // }
+
+    // public void printWarLose() {
+    //     System.out.println("Defeat! The army has been crushed, and the kingdom pays the price.\n" +
+    //                        "Wisdom has been chasing you, but you have always been faster.");
+    // }
 
 }
