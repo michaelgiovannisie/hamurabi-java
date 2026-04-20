@@ -49,7 +49,7 @@ public class Hammurabi {
                 if (sell > 0) {
                     land -= sell;
                     grain += (sell * landValue);
-                    sellResult(landValue, sell);
+                    sellResult();
                     }
                 }
                 grainFed = askHowMuchGrainToFeedPeople(grain);
