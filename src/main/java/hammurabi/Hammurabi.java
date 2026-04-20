@@ -23,6 +23,7 @@ public class Hammurabi {
         int eaten;
         int yieldPerAcre;
         double totalStarvDeaths;
+        boolean impeached;
 
     public static void main(String[] args) {
         new Hammurabi().playGame();
@@ -69,7 +70,8 @@ public class Hammurabi {
 
                 if(uprising(population, starved)) {
                     printImpeachment();
-                    return;
+                    impeached = true;
+                    break;
                 }
 
                 population -= starved;
@@ -99,7 +101,9 @@ public class Hammurabi {
 
                 year++;
             }
-            if (population == 0) {
+            if(impeached == true){
+
+            } else if (population == 0) {
             printExtinction();
             } else {
             finalSummary();
@@ -347,20 +351,21 @@ public class Hammurabi {
             }
             catch (InputMismatchException e) {
                 System.out.println("That's not a whole number. The scribes refuse to calculate that.");
+                scanner.next();
             }
         }
     } 
 
-    public String getName(){
-        while(true) {
-            System.out.println("\n\n\nHAMMURABI: KING OF ANCIENT BABYLONIA.\n\n\n" +
-                              "O GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
-                              "WHAT SHALL WE CALL YOU BEFORE HISTORY JUDGES YOU HARSHLY?");
+    public String getName() {
+        System.out.println("\n\n\nHAMMURABI: KING OF ANCIENT BABYLONIA.\n\n\n" +
+                        "O GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
+                        "WHAT SHALL WE CALL YOU BEFORE HISTORY JUDGES YOU HARSHLY?");
+        while (true) {
             String name = scanner.nextLine();
-            if (name.isEmpty()) {
-            System.out.println("A RULER WITHOUT A NAME? THAT'S SUSPICIOUS. TRY AGAIN.\n");
-            continue;
-        }
+            if (name.trim().isEmpty()) {
+                System.out.println("A RULER WITHOUT A NAME? THAT'S SUSPICIOUS. TRY AGAIN.\n");
+                continue;
+            }
         return name;
         }
     }
@@ -394,6 +399,7 @@ public class Hammurabi {
         eaten = 0;
         yieldPerAcre = 0;
         totalStarvDeaths = 0;
+        impeached = false;
     }
 
     // public boolean askForWar() {
