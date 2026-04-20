@@ -353,7 +353,8 @@ public class Hammurabi {
 
     public String getName(){
         while(true) {
-            System.out.println("\n\nO GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
+            System.out.println("\n\n\nHAMMURABI: KING OF ANCIENT BABYLONIA.\n\n\n" +
+                              "O GREAT (OR POTENTIALLY TERRIBLE) RULER.\n" +
                               "WHAT SHALL WE CALL YOU BEFORE HISTORY JUDGES YOU HARSHLY?");
             String name = scanner.nextLine();
             if (name.isEmpty()) {
