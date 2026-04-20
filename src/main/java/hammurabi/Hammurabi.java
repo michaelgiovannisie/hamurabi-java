@@ -146,10 +146,10 @@ public class Hammurabi {
         int yearsPlayed = year - 1;
         double acresPerPerson = (population == 0) ? 0 : (double) land / population;
         double percentDied = (totalStarvDeaths / (yearsPlayed * 100)) * 100;
-        System.out.println("During your reign, " + String.format("%.2f", percentDied) + "% of your people starved each year on average,\n" +
+        System.out.println("During your reign, " + String.format("%.1f", percentDied) + "% of your people starved each year on average,\n" +
                    "resulting in " + totalStarvDeaths + " total deaths.\n" +
                    "You started with 10 acres per person and now end with " +
-                   String.format("%.2f", acresPerPerson) + " acres per person.\n" +
+                   String.format("%.1f", acresPerPerson) + " acres per person.\n" +
                    "The kingdom has... changed.\n");
 		if (percentDied > 33 || acresPerPerson < 7) {
 			    System.out.println("YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
@@ -288,8 +288,8 @@ public class Hammurabi {
     }
 
     public void announcePlague() {
-         System.out.println("A plague has swept the kingdom.\n" +
-                               "Half your people are gone. The remaining half are concerned.");
+         System.out.println("\nA PLAGUE HAS SWEPT THE KINGDOM.\n" +
+                            "HALF YOUR PEOPLE ARE GONE. THE REMAINING HALF ARE CONCERNED.");
     }
 
     public int starvationDeaths(int population, int grainFed) {
