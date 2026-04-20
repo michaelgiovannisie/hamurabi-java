@@ -234,10 +234,12 @@ public class Hammurabi {
 
     public int askHowMuchGrainToFeedPeople(int grain) {
         int bushels;
+        int minFedPeople = (int) Math.ceil(population * 0.55);
+        int safeGrain = minFedPeople * 20;
         while(true){
             bushels = getNumber("How much grain do you want to spend to feed people?\n" +
                                 "To keep everyone alive, we require " + (population * 20) + " bushels.\n" +
-                                "To avoid revolt, we require " + (int)(population * 20 * 0.55) + " bushels.\n");
+                                "To avoid revolt, we require " + safeGrain + " bushels.\n");
             if(bushels < 0) {
                 System.out.println("That is not a positive number. Try again, but this time... positively.");
                 continue;
