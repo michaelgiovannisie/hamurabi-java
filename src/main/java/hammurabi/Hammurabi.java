@@ -22,7 +22,7 @@ public class Hammurabi {
         int harvested;
         int eaten;
         int yieldPerAcre;
-        double totalStarvDeaths;
+        int totalStarvDeaths;
         boolean impeached;
 
     public static void main(String[] args) {
