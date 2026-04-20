@@ -145,7 +145,7 @@ public class Hammurabi {
         System.out.println("During your reign, " + String.format("%.2f", percentDied) + "% of your people starved each year on average,\n" +
                    "resulting in " + totalStarvDeaths + " total deaths.\n" +
                    "You started with 10 acres per person and now end with " +
-                   acresPerPerson + " acres per person.\n" +
+                   String.format("%.2f", acresPerPerson) + " acres per person.\n" +
                    "The kingdom has... changed.\n");
 		if (percentDied > 33 || acresPerPerson < 7) {
 			    System.out.println("YOUR HEAVY-HANDED PERFORMANCE SMACKS OF NERO AND IVAN IV.\n" +
@@ -160,7 +160,7 @@ public class Hammurabi {
 			        System.out.println("YOUR PERFORMANCE COULD HAVE BEEN SOMEWHAT BETTER,\n" +
 					                    "BUT REALLY WASN'T TOO BAD AT ALL.\n" +
 					                    (int)(Math.random() * population * 0.8) + " PEOPLE WOULD " +
-					                    "DEARLY LIKE TO SEE YOU ASSASSINATED BUT WE ALL HAVE OUR" +
+					                    "DEARLY LIKE TO SEE YOU ASSASSINATED BUT WE ALL HAVE OUR " +
 					                    "TRIVIAL PROBLEMS");
             } else {
 			        System.out.println("A FANTASTIC PERFORMANCE!!!\n" +
