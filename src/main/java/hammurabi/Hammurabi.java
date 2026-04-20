@@ -260,8 +260,7 @@ public class Hammurabi {
         int plant;
         int maxPlant = Math.min(land, Math.min(grain / 2, population * 10));
         while(true){
-            plant = getNumber("O great " + playerName + "!\n" + 
-                              "Your land, grain, and people place limits on your ambition.\n" +
+            plant = getNumber("Your land, grain, and people place limits on your ambition.\n" +
                               "We may plant up to " + maxPlant + " acres with our resources.\n" +  
                               "How many acres of land do you want to plant with grain?\n");
             if(plant < 0) {
