@@ -41,7 +41,7 @@ public class Hammurabi {
                 if(buy > 0){
                     grain -= (buy * landValue);
                     land += buy;
-                    buyResult(land);
+                    buyResult();
                 } else {
                 int sell = askHowManyAcresToSell(land);
 
