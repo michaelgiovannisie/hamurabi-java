@@ -156,8 +156,7 @@ public class Hammurabi {
 					                "THE PEOPLE (REMAINING) FIND YOU AN UNPLEASANT RULER, AND,\n" +
 					                "FRANKLY, HATE YOUR GUTS!");
             } else if (percentDied > 10 || acresPerPerson < 9) {
-			        System.out.println("YOUR RULE HAS FINALLY COME TO AN END.\n" +
-                                       "WISDOM HAS BEEN CHASING YOU,\n" +
+			        System.out.println("WISDOM HAS BEEN CHASING YOU,\n" +
                                        "BUT YOU HAVE ALWAYS BEEN FASTER.\n" +
                                        "THE PEOPLE REMAIN, BUT THEIR FAITH IN YOU DOES NOT.\n");
             } else if (percentDied > 3 || acresPerPerson < 10) {
