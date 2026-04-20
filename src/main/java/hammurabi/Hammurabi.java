@@ -269,18 +269,11 @@ public class Hammurabi {
                 continue;
             } 
 
-            if(plant > land) {
-                System.out.println("O great " + playerName + "! Surely You jest! We only have " + land + " acres of land left!");
-                continue;
-            }
-
-            if(plant > grain/2) {
-                System.out.println("O great " + playerName + "! Surely You jest! We can only plant up to " + (grain/2) + " acres with our grain");
-                continue;
-            }
-
-            if(plant > population * 10) {
-                System.out.println("O great " + playerName + "! Surely You jest! Our people can only tend up to " + (population*10) + " acres.");
+            if (plant > maxPlant) {
+                System.out.println(
+                    "O great " + playerName +
+                    "! Surely You jest! We can only plant up to " + maxPlant + " acres."
+                );
                 continue;
             }
             return plant;
