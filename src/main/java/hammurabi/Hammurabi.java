@@ -69,7 +69,7 @@ public class Hammurabi {
 
                 if(uprising(population, starved)) {
                     printImpeachment();
-                    break;
+                    return;
                 }
 
                 population -= starved;
@@ -130,7 +130,7 @@ public class Hammurabi {
     }
 
     public void printImpeachment() {
-        System.out.println(starved + " PEOPLE DIED FROM STARVATION\n" +
+        System.out.println(starved + " PEOPLE DIED FROM STARVATION THIS YEAR\n" +
                                     "IT WAS A DISASTAAAH.\n" +
                                     "YOUR RULE HAS BEEN SO DISASTROUS THAT THE PEOPLE HAVE\n" +
                                     "DECIDED THAT EVEN A PIG WITH A CROWN WOULD DO A BETTER JOB.\n" +
