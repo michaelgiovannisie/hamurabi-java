@@ -230,8 +230,8 @@ public class Hammurabi {
         }
     }
 
-    public void sellResult(int landValue, int sell) {
-        System.out.println("You've sold " + sell + " acres for " + (landValue * sell)+  " bushels of grain.\n" +
+    public void sellResult() {
+        System.out.println("You now only own " + land + " acres and " + grain + " bushels.\n" +
                            "The map just got smaller, but at least you can eat");
     }
 
